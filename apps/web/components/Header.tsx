@@ -51,6 +51,16 @@ export default function Header() {
             비용 안내
           </a>
           <a
+            href={process.env.NEXT_PUBLIC_DEMO_URL || '#'}
+            id="nav-link-demo"
+            className="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors py-1 flex items-center gap-1.5"
+          >
+            <span>데모 체험</span>
+            <span className="text-[10px] bg-indigo-50 text-indigo-600 border border-indigo-200/60 rounded px-1.5 py-0.5 font-semibold">
+              Live
+            </span>
+          </a>
+          <a
             href="#contact"
             id="nav-cta-button"
             className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-all shadow-xs active:scale-[0.98]"
@@ -103,6 +113,17 @@ export default function Header() {
             className="block text-sm font-medium text-zinc-700 hover:text-zinc-950 hover:bg-zinc-50 rounded-md px-3 py-2 transition-colors"
           >
             비용 안내
+          </a>
+          <a
+            href={process.env.NEXT_PUBLIC_DEMO_URL || '#'}
+            id="mobile-link-demo"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center justify-between text-sm font-medium text-indigo-600 hover:bg-indigo-50/50 rounded-md px-3 py-2 transition-colors"
+          >
+            <span>데모 체험</span>
+            <span className="text-[10px] bg-indigo-50 text-indigo-600 border border-indigo-200/60 rounded px-1.5 py-0.5 font-semibold">
+              Live
+            </span>
           </a>
           <a
             href="#contact"
