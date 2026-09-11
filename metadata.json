@@ -1,0 +1,8 @@
+{
+  "name": "webay",
+  "description": "비개발자 창업가와 소상공인을 위한 1인 모던 웹 개발 스튜디오 webay",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
