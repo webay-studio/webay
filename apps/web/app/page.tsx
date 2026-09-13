@@ -1,21 +1,26 @@
-import Header from '@/components/Header';
-import Hero from '@/components/Hero';
-import Process from '@/components/Process';
-import Pricing from '@/components/Pricing';
-import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
+import { FloatingNavArea } from './_area/FloatingNav.area';
+import { HeaderArea } from './_area/Header.area';
+import { ScrollyHeroArea } from './_area/ScrollyHero.area';
+import { ProcessArea } from './_area/Process.area';
+import { FooterArea } from './_area/Footer.area';
 
 export default function Home() {
   return (
-    <div id="webay-landing-page" className="min-h-screen flex flex-col bg-white">
-      <Header />
+    <div
+      id="webay-landing-page"
+      className="min-h-screen flex flex-col bg-white text-zinc-900 selection:bg-violet-500/15 selection:text-violet-900"
+    >
+      <FloatingNavArea />
+      <HeaderArea />
+
       <main id="main-content" className="flex-1">
-        <Hero />
-        <Process />
-        <Pricing />
-        <Contact />
+        <ScrollyHeroArea />
+        <ProcessArea />
       </main>
-      <Footer />
+
+      <FooterArea />
     </div>
   );
 }
+
+

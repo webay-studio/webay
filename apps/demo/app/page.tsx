@@ -22,7 +22,6 @@ export default function DemoPage() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
-      {/* Top Demo Bar */}
       <header className="border-b border-zinc-800/80 bg-zinc-900/60 backdrop-blur-md sticky top-0 z-50 px-4 lg:px-8 py-3.5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
@@ -39,7 +38,6 @@ export default function DemoPage() {
           </span>
         </div>
 
-        {/* Viewport Switcher & Main Site Link */}
         <div className="flex items-center gap-3">
           <div className="hidden md:flex items-center bg-zinc-800/60 p-1 rounded-lg border border-zinc-700/50">
             <button
@@ -76,9 +74,7 @@ export default function DemoPage() {
         </div>
       </header>
 
-      {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
-        {/* Hero Section */}
         <div className="text-center max-w-3xl mx-auto pt-6 pb-4 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
             <Sparkles className="w-3.5 h-3.5" />
@@ -93,7 +89,6 @@ export default function DemoPage() {
           </p>
         </div>
 
-        {/* Tab Navigation */}
         <div className="flex justify-center border-b border-zinc-800">
           <div className="flex space-x-2 sm:space-x-4">
             <button
@@ -132,7 +127,6 @@ export default function DemoPage() {
           </div>
         </div>
 
-        {/* Dynamic Content by Tab */}
         {activeTab === 'features' && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 rounded-2xl bg-zinc-900/70 border border-zinc-800/80 space-y-3 hover:border-zinc-700 transition">
@@ -233,7 +227,6 @@ export default function DemoPage() {
           </div>
         )}
 
-        {/* Interactive Device Preview Container */}
         <div className="pt-4 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">
@@ -250,7 +243,6 @@ export default function DemoPage() {
                 device === 'mobile' ? 'max-w-sm' : 'max-w-full'
               }`}
             >
-              {/* Fake Browser Top Bar */}
               <div className="bg-zinc-900 px-4 py-3 border-b border-zinc-800 flex items-center gap-2">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-red-500/80" />
@@ -262,7 +254,6 @@ export default function DemoPage() {
                 </div>
               </div>
 
-              {/* Mock Screen Content */}
               <div className="p-6 sm:p-8 space-y-6 bg-zinc-950">
                 <div className="space-y-2">
                   <div className="inline-block text-[11px] font-medium text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded">
@@ -301,7 +292,6 @@ export default function DemoPage() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-zinc-800/80 py-6 text-center text-xs text-zinc-500">
         © 2026 webay. Monorepo Turborepo Architecture. All rights reserved.
       </footer>
