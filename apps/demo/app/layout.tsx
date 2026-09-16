@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'webay Demo | 인터랙티브 체험 및 포트폴리오 데모',
-  description: 'webay 스튜디오의 제작 컴포넌트, 성능, UI/UX를 직접 확인해보실 수 있는 실시간 인터랙티브 데모 사이트입니다.',
+  title: '온유병원 | 당신의 건강에, 온유한 진심을',
+  description: '충분히 듣고, 세심하게 살피는 온유병원. 내과, 건강검진, 가정의학과와 웰니스 진료를 소개하는 webay 디자인 데모입니다.',
   openGraph: {
-    title: 'webay Demo | 인터랙티브 체험 및 포트폴리오 데모',
-    description: 'webay 스튜디오의 제작 컴포넌트, 성능, UI/UX를 직접 확인해보실 수 있는 실시간 인터랙티브 데모 사이트입니다.',
+    title: '온유병원 | 당신의 건강에, 온유한 진심을',
+    description: '당신의 건강한 일상에 함께하는 온유병원 — webay 병원 홈페이지 디자인 데모.',
     type: 'website',
   },
 };
@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="scroll-smooth">
-      <body className="bg-zinc-950 text-zinc-100 antialiased selection:bg-indigo-500/30 selection:text-indigo-200 min-h-screen flex flex-col font-sans" suppressHydrationWarning>
+      <body>
         {children}
       </body>
     </html>

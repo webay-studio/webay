@@ -1,300 +1,52 @@
 'use client';
 
-import { useState } from 'react';
-import { Button } from '@webay/ui';
-import {
-  Sparkles,
-  Smartphone,
-  Monitor,
-  Zap,
-  CheckCircle2,
-  ExternalLink,
-  Layers,
-  ArrowRight,
-  ShieldCheck,
-  Cpu,
-  Palette
-} from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowDown, ArrowRight, ArrowUpRight, CalendarDays, Check, Clock3, HeartPulse, Leaf, MapPin, Menu, Plus, ShieldCheck, Stethoscope, X } from 'lucide-react';
+
+const specialties = [
+  { name: '내과', english: 'INTERNAL MEDICINE', icon: Stethoscope, title: '작은 신호부터,\n세심하게 살핍니다.', description: '일상 속 작은 불편함도 가볍게 넘기지 않습니다. 충분한 대화와 체계적인 진료로 나에게 맞는 건강 관리를 시작하세요.', tags: ['소화기 질환', '만성질환 관리', '호흡기 질환'], image: 'photo-1576091160399-112ba8d25d1d' },
+  { name: '건강검진', english: 'HEALTH SCREENING', icon: ShieldCheck, title: '건강한 내일을 위한,\n오늘의 좋은 선택.', description: '나이와 생활 습관, 가족력을 함께 살피는 맞춤 검진. 검사 전 상담부터 결과에 대한 설명까지 차근차근 함께합니다.', tags: ['맞춤 건강검진', '국가 건강검진', '검진 결과 상담'], image: 'photo-1576091160550-2173dba999ef' },
+  { name: '가정의학과', english: 'FAMILY MEDICINE', icon: HeartPulse, title: '나와 가족의 건강을,\n오래도록 함께.', description: '가족의 일상을 이해하는 가까운 주치의. 생애 주기에 맞춘 예방과 상담으로 지속적인 건강 관리를 돕습니다.', tags: ['생애 주기별 관리', '예방접종', '건강 상담'], image: 'photo-1576091160399-112ba8d25d1d' },
+  { name: '웰니스 클리닉', english: 'WELLNESS CLINIC', icon: Leaf, title: '몸과 마음이 찾는,\n일상의 균형.', description: '수면, 영양, 생활 습관까지 나의 일상을 돌아봅니다. 개인별 상담을 통해 지속 가능한 건강 습관을 함께 만들어갑니다.', tags: ['영양 상담', '생활 습관 관리', '수면 상담'], image: 'photo-1472396961693-142e6e269027' },
+];
+const navigation = [['온유 소개', '#about'], ['진료 안내', '#care'], ['온유의 약속', '#promise'], ['병원 소식', '#news'], ['오시는 길', '#visit']];
+const news = [
+  { category: '진료 안내', title: '처음 방문하시는 분들을 위한 이용 안내', date: '2026.09.01', body: '처음 방문하실 때는 신분증을 지참해 주세요. 복용 중인 약이나 이전 검사 결과가 있다면 상담 시 함께 확인할 수 있습니다. 이 페이지는 가상 병원 데모이며 실제 진료는 제공하지 않습니다.' },
+  { category: '온유 이야기', title: '머무는 순간까지 편안한, 온유의 공간', date: '2026.08.24', body: '온유는 진료를 기다리는 시간도 편안하기를 바랍니다. 자연을 닮은 색, 따뜻한 빛, 여유 있는 대기 공간을 통해 환자 중심의 병원 경험을 제안합니다.' },
+  { category: '이용 안내', title: '건강검진 상담은 어떻게 진행되나요?', date: '2026.08.12', body: '건강검진은 현재 건강 상태와 생활 습관을 확인하는 상담에서 시작합니다. 필요한 검사와 준비 사항은 의료진과 상담 후 결정합니다. 데모 예약에서 검진 상담 과정을 체험해 보세요.' },
+];
+
+function Brand({ light = false }: { light?: boolean }) {
+  return <a className={`brand ${light ? 'brand-light' : ''}`} href="#top" aria-label="온유병원 홈"><span className="brand-symbol"><Plus strokeWidth={1.4} /></span><span>온유병원<small>ONYU HOSPITAL</small></span></a>;
+}
 
 export default function DemoPage() {
-  const [device, setDevice] = useState<'desktop' | 'mobile'>('desktop');
-  const [activeTab, setActiveTab] = useState<'features' | 'performance' | 'components'>('features');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeCare, setActiveCare] = useState(0);
+  const [reserved, setReserved] = useState(false);
+  const [article, setArticle] = useState<(typeof news)[number] | null>(null);
+  const bookingDialog = useRef<HTMLDialogElement>(null);
+  const articleDialog = useRef<HTMLDialogElement>(null);
+  const specialty = specialties[activeCare];
+  useEffect(() => { if (article) articleDialog.current?.showModal(); }, [article]);
+  const openBooking = () => { setReserved(false); setMenuOpen(false); bookingDialog.current?.showModal(); };
 
-  return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
-      <header className="border-b border-zinc-800/80 bg-zinc-900/60 backdrop-blur-md sticky top-0 z-50 px-4 lg:px-8 py-3.5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-lg tracking-tight text-white flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-              webay
-            </span>
-            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
-              DEMO
-            </span>
-          </div>
-          <span className="hidden sm:inline text-xs text-zinc-500 font-mono">
-            subdomain: demo.*
-          </span>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <div className="hidden md:flex items-center bg-zinc-800/60 p-1 rounded-lg border border-zinc-700/50">
-            <button
-              onClick={() => setDevice('desktop')}
-              className={`p-1.5 rounded text-xs font-medium flex items-center gap-1.5 transition-all ${
-                device === 'desktop'
-                  ? 'bg-zinc-700 text-white shadow-sm'
-                  : 'text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              <Monitor className="w-4 h-4" />
-              Desktop
-            </button>
-            <button
-              onClick={() => setDevice('mobile')}
-              className={`p-1.5 rounded text-xs font-medium flex items-center gap-1.5 transition-all ${
-                device === 'mobile'
-                  ? 'bg-zinc-700 text-white shadow-sm'
-                  : 'text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              <Smartphone className="w-4 h-4" />
-              Mobile
-            </button>
-          </div>
-
-          <a
-            href="/"
-            className="text-xs font-medium px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition flex items-center gap-1.5 border border-zinc-700"
-          >
-            메인 사이트로 이동
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-        </div>
-      </header>
-
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
-        <div className="text-center max-w-3xl mx-auto pt-6 pb-4 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-            <Sparkles className="w-3.5 h-3.5" />
-            Vercel 서브도메인 데모 배포 환경
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
-            webay 인터랙티브 데모
-          </h1>
-          <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-            모노레포의 <code className="text-indigo-300 bg-indigo-950/40 px-1.5 py-0.5 rounded">apps/demo</code>에서 독립적으로 빌드 및 실행되며,
-            Vercel 서브도메인(<code className="text-emerald-300 bg-emerald-950/40 px-1.5 py-0.5 rounded">demo.도메인</code>)으로 즉시 연결되는 데모 페이지입니다.
-          </p>
-        </div>
-
-        <div className="flex justify-center border-b border-zinc-800">
-          <div className="flex space-x-2 sm:space-x-4">
-            <button
-              onClick={() => setActiveTab('features')}
-              className={`pb-3 px-3 text-sm font-medium border-b-2 transition-all flex items-center gap-2 ${
-                activeTab === 'features'
-                  ? 'border-indigo-500 text-indigo-400'
-                  : 'border-transparent text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              <Layers className="w-4 h-4" />
-              모노레포 특징
-            </button>
-            <button
-              onClick={() => setActiveTab('performance')}
-              className={`pb-3 px-3 text-sm font-medium border-b-2 transition-all flex items-center gap-2 ${
-                activeTab === 'performance'
-                  ? 'border-indigo-500 text-indigo-400'
-                  : 'border-transparent text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              <Zap className="w-4 h-4" />
-              Vercel 최적화
-            </button>
-            <button
-              onClick={() => setActiveTab('components')}
-              className={`pb-3 px-3 text-sm font-medium border-b-2 transition-all flex items-center gap-2 ${
-                activeTab === 'components'
-                  ? 'border-indigo-500 text-indigo-400'
-                  : 'border-transparent text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              <Palette className="w-4 h-4" />
-              공유 UI (@webay/ui)
-            </button>
-          </div>
-        </div>
-
-        {activeTab === 'features' && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-zinc-900/70 border border-zinc-800/80 space-y-3 hover:border-zinc-700 transition">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center border border-indigo-500/20">
-                <Layers className="w-5 h-5" />
-              </div>
-              <h2 className="text-lg font-bold text-white">독립적인 Next.js 앱</h2>
-              <p className="text-sm text-zinc-400 leading-relaxed">
-                <code className="text-zinc-200">apps/web</code>과 <code className="text-zinc-200">apps/demo</code>가 분리되어 있어 독립적으로 개발, 테스트, 빌드가 가능합니다.
-              </p>
-              <div className="pt-2 flex items-center gap-1.5 text-xs text-emerald-400">
-                <CheckCircle2 className="w-4 h-4" />
-                독립적 배포 파이프라인
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-zinc-900/70 border border-zinc-800/80 space-y-3 hover:border-zinc-700 transition">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
-                <Cpu className="w-5 h-5" />
-              </div>
-              <h2 className="text-lg font-bold text-white">공유 패키지 시스템</h2>
-              <p className="text-sm text-zinc-400 leading-relaxed">
-                <code className="text-zinc-200">packages/ui</code>, <code className="text-zinc-200">typescript-config</code> 등 공통 코드를 한 곳에서 관리하여 중복을 제거합니다.
-              </p>
-              <div className="pt-2 flex items-center gap-1.5 text-xs text-emerald-400">
-                <CheckCircle2 className="w-4 h-4" />
-                Zero-config TypeScript HMR
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-zinc-900/70 border border-zinc-800/80 space-y-3 hover:border-zinc-700 transition">
-              <div className="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center border border-sky-500/20">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <h2 className="text-lg font-bold text-white">도메인 분리 아키텍처</h2>
-              <p className="text-sm text-zinc-400 leading-relaxed">
-                루트 도메인과 서브도메인을 Vercel 프로젝트 Root Directory 설정만으로 완벽하게 격리 배포합니다.
-              </p>
-              <div className="pt-2 flex items-center gap-1.5 text-xs text-emerald-400">
-                <CheckCircle2 className="w-4 h-4" />
-                Vercel 네이티브 서브도메인 지원
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'performance' && (
-          <div className="p-8 rounded-2xl bg-zinc-900/70 border border-zinc-800/80 space-y-6">
-            <h2 className="text-xl font-bold text-white">Vercel 배포 세팅 안내</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-5 rounded-xl bg-zinc-950/60 border border-zinc-800 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-indigo-400">프로젝트 1: 메인 웹</span>
-                  <span className="text-xs px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-mono">기본 도메인</span>
-                </div>
-                <ul className="text-xs text-zinc-400 space-y-2 font-mono">
-                  <li>• Framework: Next.js</li>
-                  <li>• Root Directory: <strong className="text-white">apps/web</strong></li>
-                  <li>• Domain: yourdomain.com</li>
-                </ul>
-              </div>
-
-              <div className="p-5 rounded-xl bg-zinc-950/60 border border-zinc-800 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-emerald-400">프로젝트 2: 데모 앱</span>
-                  <span className="text-xs px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-mono">서브 도메인</span>
-                </div>
-                <ul className="text-xs text-zinc-400 space-y-2 font-mono">
-                  <li>• Framework: Next.js</li>
-                  <li>• Root Directory: <strong className="text-white">apps/demo</strong></li>
-                  <li>• Domain: demo.yourdomain.com</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'components' && (
-          <div className="p-8 rounded-2xl bg-zinc-900/70 border border-zinc-800/80 space-y-6">
-            <div>
-              <h2 className="text-xl font-bold text-white">@webay/ui 공유 컴포넌트 실시간 테스트</h2>
-              <p className="text-xs text-zinc-400 mt-1">모든 패키지에서 공통으로 재사용되는 Button 컴포넌트입니다.</p>
-            </div>
-            <div className="flex flex-wrap gap-4 items-center p-6 rounded-xl bg-zinc-950/60 border border-zinc-800">
-              <Button variant="default" className="bg-indigo-600 hover:bg-indigo-500 text-white">
-                Default Button
-              </Button>
-              <Button variant="secondary" className="bg-zinc-800 hover:bg-zinc-700 text-white">
-                Secondary Button
-              </Button>
-              <Button variant="outline" className="border-zinc-700 text-zinc-200 hover:bg-zinc-800">
-                Outline Button
-              </Button>
-              <Button variant="ghost" className="text-zinc-400 hover:text-white hover:bg-zinc-800">
-                Ghost Button
-              </Button>
-            </div>
-          </div>
-        )}
-
-        <div className="pt-4 space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">
-              실시간 렌더링 프리뷰 ({device})
-            </h2>
-            <span className="text-xs text-zinc-500">
-              Next.js 15 App Router · Tailwind CSS v4
-            </span>
-          </div>
-
-          <div className="flex justify-center">
-            <div
-              className={`transition-all duration-300 w-full rounded-2xl border border-zinc-800 overflow-hidden shadow-2xl bg-zinc-900 ${
-                device === 'mobile' ? 'max-w-sm' : 'max-w-full'
-              }`}
-            >
-              <div className="bg-zinc-900 px-4 py-3 border-b border-zinc-800 flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                </div>
-                <div className="flex-1 mx-4 bg-zinc-950 px-3 py-1 rounded-md text-[11px] font-mono text-zinc-400 text-center truncate border border-zinc-800/80">
-                  https://demo.webay.dev
-                </div>
-              </div>
-
-              <div className="p-6 sm:p-8 space-y-6 bg-zinc-950">
-                <div className="space-y-2">
-                  <div className="inline-block text-[11px] font-medium text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded">
-                    LIVE PREVIEW
-                  </div>
-                  <h3 className="text-2xl font-bold text-white">
-                    웹 제작 데모 포트폴리오
-                  </h3>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    실제 고객에게 제공될 인터랙티브 위젯, 반응형 뷰포트, 빠른 로딩 속도를 직접 체감할 수 있습니다.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 flex items-center justify-between">
-                  <div>
-                    <div className="text-xs text-zinc-400">Lighthouse Score</div>
-                    <div className="text-lg font-bold text-emerald-400">100 / 100</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-zinc-400">First Load JS</div>
-                    <div className="text-lg font-bold text-indigo-400">&lt; 100 KB</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-zinc-400">Monthly Cost</div>
-                    <div className="text-lg font-bold text-white">0 KRW</div>
-                  </div>
-                </div>
-
-                <Button className="w-full bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center gap-2">
-                  <span>데모 상담 신청하기</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      <footer className="border-t border-zinc-800/80 py-6 text-center text-xs text-zinc-500">
-        © 2026 webay. Monorepo Turborepo Architecture. All rights reserved.
-      </footer>
-    </div>
-  );
+  return <div id="top">
+    <a className="skip-link" href="#main">본문 바로가기</a>
+    <div className="utility-bar"><span>당신의 일상에, 건강한 온기를 더합니다.</span><span>WEBAY DESIGN DEMO <span className="utility-dot" /> 가상 병원 홈페이지</span></div>
+    <header className="site-header"><Brand /><nav className={menuOpen ? 'navigation is-open' : 'navigation'} aria-label="주 메뉴">{navigation.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}</nav><div className="header-actions"><button className="booking-button" onClick={openBooking}>진료 예약 <ArrowUpRight size={16} /></button><button className="menu-toggle" aria-label={menuOpen ? '메뉴 닫기' : '메뉴 열기'} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button></div></header>
+    <main id="main">
+      <section className="hero" aria-labelledby="hero-title"><div className="hero-image" /><div className="hero-content"><span className="eyebrow light"><span /> CARE THAT STAYS WITH YOU</span><h1 id="hero-title">당신의 건강에,<br />온유한 진심을.</h1><p>몸의 작은 신호에 귀 기울이고,<br />건강한 일상으로 돌아가는 길에 함께합니다.</p><button className="hero-button" onClick={openBooking}>나를 위한 진료 예약 <ArrowUpRight size={19} /></button></div><div className="hero-bottom"><span>더 가까이, 더 따뜻하게. 온유병원</span><a href="#about">SCROLL TO EXPLORE <ArrowDown size={15} /></a><span className="hero-index">ONYU <span /> CARE</span></div><div className="hero-caption">A little care.<br /><em>A better everyday.</em></div></section>
+      <section className="quick-links container" aria-label="빠른 이용 안내"><button onClick={openBooking}><CalendarDays /><span><strong>진료 예약</strong><small>편리하게 시작하는 진료</small></span><ArrowUpRight /></button><a href="#care"><Stethoscope /><span><strong>진료과 안내</strong><small>나에게 필요한 진료 찾기</small></span><ArrowUpRight /></a><a href="#visit"><Clock3 /><span><strong>진료시간 안내</strong><small>방문 전 확인해 주세요</small></span><ArrowUpRight /></a><a href="#visit"><MapPin /><span><strong>오시는 길</strong><small>온유로 이어지는 길</small></span><ArrowUpRight /></a></section>
+      <section className="intro container" id="about"><div><span className="eyebrow">HELLO, ONYU</span><h2>좋은 진료는,<br /><span className="muted-heading">당신을 이해하는 것부터.</span></h2></div><div className="intro-copy"><p>같은 증상이라도, 저마다의 이야기는 다르기에.<br />온유는 질환 너머의 사람을 먼저 바라봅니다.</p><p>충분히 듣고, 알기 쉽게 설명하며, 함께 답을 찾는 진료.<br />당신의 매일이 조금 더 건강하고 편안해지도록<br />가장 가까운 곳에서 함께하겠습니다.</p><a className="text-link" href="#promise">온유의 진료 철학 <ArrowUpRight size={17} /></a></div></section>
+      <section className="care-section" id="care"><div className="container"><div className="section-heading"><div><span className="eyebrow">OUR SPECIALTIES</span><h2>당신에게 필요한, 세심한 진료</h2></div><span className="section-note">오늘의 진료부터 내일의 건강까지.</span></div><div className="care-tabs" role="tablist" aria-label="진료 분야">{specialties.map((item, index) => <button id={`care-tab-${index}`} role="tab" aria-selected={activeCare === index} aria-controls="care-panel" tabIndex={activeCare === index ? 0 : -1} key={item.name} onClick={() => setActiveCare(index)} onKeyDown={event => { if (['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) { event.preventDefault(); const next = event.key === 'Home' ? 0 : event.key === 'End' ? 3 : (index + (event.key === 'ArrowRight' ? 1 : 3)) % 4; setActiveCare(next); document.getElementById(`care-tab-${next}`)?.focus(); } }}><item.icon size={21} />{item.name}<ArrowUpRight size={16} /></button>)}</div><div className="care-panel" id="care-panel" role="tabpanel" aria-labelledby={`care-tab-${activeCare}`}><div className="care-copy"><span className="eyebrow">{specialty.english}</span><h3>{specialty.title}</h3><p>{specialty.description}</p><div className="care-tags">{specialty.tags.map(tag => <span key={tag}>{tag}</span>)}</div><button className="text-link" onClick={openBooking}>{specialty.name} 상담 예약 <ArrowUpRight size={17} /></button></div><div className="care-photo" style={{ backgroundImage: `url(https://images.unsplash.com/${specialty.image}?auto=format&fit=crop&w=1000&q=85)` }} role="img" aria-label={`${specialty.name} 소개를 위한 이미지`}><span>Thoughtful care, for every you.</span></div></div></div></section>
+      <section className="promise-section container" id="promise"><div className="section-heading"><div><span className="eyebrow">THE ONYU PROMISE</span><h2>변하지 않을, 세 가지 약속</h2></div><p className="section-note">진료의 모든 순간에<br />온유의 진심을 담겠습니다.</p></div><div className="promise-grid">{[{ number: '01', icon: HeartPulse, title: '충분히 듣는 진료', text: '작은 불편함부터 일상의 고민까지.\n당신의 이야기에 먼저 귀 기울입니다.' }, { number: '02', icon: ShieldCheck, title: '이해를 돕는 설명', text: '어려운 의학 용어 대신 쉬운 말로.\n진료 과정과 치료 방향을 함께 나눕니다.' }, { number: '03', icon: Leaf, title: '일상까지 이어지는 돌봄', text: '진료실을 나선 뒤의 건강도 생각합니다.\n꾸준한 관리로 건강한 일상을 돕습니다.' }].map(item => <article key={item.number}><div className="promise-top"><span>{item.number}</span><item.icon size={31} strokeWidth={1.2} /></div><h3>{item.title}</h3><p>{item.text}</p></article>)}</div></section>
+      <section className="space-banner"><div className="container"><span className="eyebrow light">A SPACE FOR YOUR WELLBEING</span><h2>머무는 순간에도,<br />편안함이 스며들도록.</h2><p>따뜻한 빛과 자연의 여유를 담은 공간.<br />온유에서 잠시, 당신의 건강에만 집중하세요.</p><a href="#visit">온유 만나러 가기 <ArrowUpRight size={18} /></a></div></section>
+      <section className="news-section container" id="news"><div className="section-heading"><div><span className="eyebrow">ONYU JOURNAL</span><h2>온유의 새로운 이야기</h2></div><span className="section-note">가까이에서 전하는 온유 소식</span></div><div className="news-grid">{news.map(item => <button className="news-card" key={item.title} onClick={() => setArticle(item)}><span className="news-category">{item.category}</span><h3>{item.title}</h3><div><time>{item.date}</time><ArrowUpRight size={21} /></div></button>)}</div></section>
+      <section className="visit-section" id="visit"><div className="container visit-grid"><div><span className="eyebrow">WE ARE HERE FOR YOU</span><h2>건강한 일상으로 가는 길,<br />온유가 함께할게요.</h2><p>방문 전 진료시간을 확인해 주세요.</p><button className="booking-button" onClick={openBooking}>진료 예약하기 <ArrowUpRight size={18} /></button></div><div className="visit-details"><h3><Clock3 size={20} /> 진료시간 안내</h3><dl><div><dt>평일</dt><dd>09:00 — 18:00</dd></div><div><dt>토요일</dt><dd>09:00 — 13:00</dd></div><div><dt>점심시간</dt><dd>13:00 — 14:00</dd></div></dl><small>일요일 · 공휴일 휴진 / 데모용 진료시간입니다.</small><div className="address"><MapPin size={20} /><div><strong>온유병원 오시는 길</strong><p>서울특별시 강남구 · 상세 위치 준비 중</p><small>가상 병원으로 실제 방문 주소는 제공하지 않습니다.</small></div></div></div></div></section>
+    </main>
+    <footer><div className="container"><div className="footer-top"><Brand light /><p>당신의 건강에, 온유한 진심을.</p><a href="#top">맨 위로 <ArrowUpRight size={17} /></a></div><div className="footer-bottom"><span>© 2026 ONYU HOSPITAL. Designed by webay.</span><span>본 사이트는 가상의 병원을 소개하는 디자인 데모입니다.</span></div></div></footer>
+    <dialog ref={bookingDialog} className="modal" onClick={event => { if (event.target === event.currentTarget) bookingDialog.current?.close(); }} aria-labelledby="booking-title"><button className="modal-close" aria-label="예약 창 닫기" onClick={() => bookingDialog.current?.close()}><X /></button>{reserved ? <div className="booking-success"><span className="success-icon"><Check /></span><span className="eyebrow">THANK YOU</span><h2 id="booking-title">예약 체험을 완료했어요.</h2><p>실제 예약이나 개인정보 전송은 이루어지지 않습니다.<br />온유의 따뜻한 진료 경험을 만나 주셔서 감사합니다.</p><button className="booking-button" onClick={() => bookingDialog.current?.close()}>확인 <ArrowRight size={17} /></button></div> : <><span className="eyebrow">YOUR FIRST STEP TO WELLNESS</span><h2 id="booking-title">온유 진료 예약</h2><p className="modal-description">원하시는 진료와 방문 일정을 선택해 주세요.<br />실제 접수되지 않는 데모 예약입니다.</p><form onSubmit={event => { event.preventDefault(); setReserved(true); }}><label>진료 분야<select defaultValue={specialty.name}>{specialties.map(item => <option key={item.name}>{item.name}</option>)}</select></label><label>방문 희망일<input type="date" required min={new Date().toLocaleDateString('sv-SE')} /></label><label>희망 시간<select defaultValue="" required><option value="" disabled>시간을 선택해 주세요</option><option>오전 09:00 — 12:00</option><option>오후 14:00 — 17:00 (평일)</option></select></label><p className="form-note">개인정보 입력 없이 예약 흐름을 체험할 수 있습니다.<br />일요일·공휴일은 휴진이며, 이 선택은 예약을 확정하지 않습니다.</p><button type="submit" className="booking-button">예약 체험 완료 <ArrowUpRight size={17} /></button></form></>}</dialog>
+    <dialog ref={articleDialog} className="modal article-modal" onClose={() => setArticle(null)} onClick={event => { if (event.target === event.currentTarget) articleDialog.current?.close(); }} aria-labelledby="article-title"><button className="modal-close" aria-label="소식 닫기" onClick={() => articleDialog.current?.close()}><X /></button>{article && <><span className="eyebrow">{article.category}</span><h2 id="article-title">{article.title}</h2><time>{article.date}</time><p>{article.body}</p></>}</dialog>
+  </div>;
 }
