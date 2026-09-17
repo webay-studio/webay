@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="ko" className="scroll-smooth">
-      <body className="bg-[#fcfdfd] text-zinc-900 antialiased selection:bg-violet-500/15 selection:text-violet-950 min-h-screen flex flex-col font-sans" suppressHydrationWarning>
+      <body className="bg-[#fcfdfd] text-zinc-900 antialiased selection:bg-blue-500/15 selection:text-blue-950 min-h-screen flex flex-col font-sans" suppressHydrationWarning>
         {children}
       </body>
     </html>
