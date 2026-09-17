@@ -78,6 +78,9 @@
 .studio-closing-mark{width:40px;height:auto}
 @media(max-width:640px){.studio-logo-image{width:126px}}
 .project-cover.hospital{background:linear-gradient(90deg,#173e35dd,#173e3530),url('/demos/hospital.jpg') center/cover;color:#fff}
+.project-cover.space{background:linear-gradient(90deg,#3e3a2dc9,#3e3a2d25),url('/demos/brand.jpg') center/cover;color:#fff4e1}
+.project-cover.space strong{font-family:Georgia,serif;font-weight:400;letter-spacing:-1px;position:relative;z-index:1}
+.project-cover.space .project-shape{display:none}
 .project-cover.hospital strong{font-size:27px;font-weight:500;letter-spacing:2px;margin-top:37px}
 .project-cover.hospital .project-shape{position:absolute;right:22px;top:54px;width:39px;height:46px;border:1px solid #dce8d28a;border-radius:45% 45% 18% 45%;transform:rotate(-9deg)}
 .project-cover.wedding{background:#f3f1e7;color:#6f7d60}

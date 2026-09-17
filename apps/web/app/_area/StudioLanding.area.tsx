@@ -7,8 +7,8 @@ import { ArrowUpRight, ArrowRight, Check, Code2, Layers3, MessageSquare, Menu, X
 const projects = [
   { category: '병원 웹사이트', name: '온유병원 · 건강에 온유한 진심을', type: 'hospital', label: '온유병원', desc: '차분한 자연의 색과 세심한 진료 안내를 담은 병원 홈페이지', href: '/demo' },
   { category: '모바일 청첩장', name: '서준과 하은 · 함께하는 모든 계절', type: 'wedding', label: 'Our forever.', desc: '오월의 초록과 아이보리로 담은 따뜻한 모바일 청첩장', href: '/demo/wedding' },
-  { category: '브랜드 웹사이트', name: '머물고 싶은 공간을 온라인으로', type: 'space', label: 'STAY, SLOW.', desc: '공간의 분위기와 정보를 함께 전달하는 웹사이트', href: '#services' },
-  { category: '관리자 화면', name: '운영이 편해지는 작은 변화', type: 'dashboard', label: 'Overview', desc: '필요한 정보와 기능을 직관적으로 담은 관리 화면', href: '#services' },
+  { category: '브랜드 웹사이트', name: 'STAY, SLOW. · 온전히 나의 속도로', type: 'space', label: 'STAY, SLOW.', desc: '따뜻한 공간의 분위기부터 머무름 예약까지 담은 스테이 브랜드', href: '/demo/brand' },
+  { category: '관리자 화면', name: 'STAY, SLOW. · 더 가벼운 운영', type: 'dashboard', label: 'Overview', desc: '예약 관리부터 매출과 공간 현황까지 한눈에 보는 운영 대시보드', href: '/demo/admin' },
 ];
 const questions = [
   ['기획서가 없어도 시작할 수 있나요?', '네. 마음에 드는 사이트 링크와 사업 소개만 보내주세요. 필요한 페이지와 기능을 함께 정리하고 제작 범위를 안내해 드립니다.'],
